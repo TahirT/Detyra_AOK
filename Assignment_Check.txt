@@ -1,0 +1,29 @@
+Done===	ALU 16-Bit
+	AND, OR, ADD, SUB si operacione të ALU
+	iii. Të përdoret Ripple-Carry për mbledhësin
+	b) [3 pikë] Të krijohet Sigle-Cycle Datapath përmes ndërlidhjes së 		ALU me Register File,
+Done===	Data & Instruction Memory
+Done===	c) [3 pikë] Të ndërlidhet njësia e kontrollit me pjesët a) dhe b)
+	i. Të shtohet ALU Control sipas dizajnit nga ligjëratat
+	ii. Të ndryshohet Njësia e Kontrollit dhe ALU Control varësisht nga 		instruksionet që shtohen
+	d) [6 pikë] Instruksionet bazë që duhet të përkrahen nga CPU
+	i. add
+	ii. and
+	iii. or
+	iv. sub
+	v. lw
+	vi. sw 
+	e) [8 pikë] Të ekzekutohet programi i mëposhtëm nga memoria:
+	addi $r2, $zero, 109 //vetem nese eshte implementuar
+	lw $r1, 20($r2)
+	sub $r2, $r1, $zero
+	add $r0, $r1, $2
+	sll $r0, $r1 //vetem nese eshte implementuar
+	sw $r0, 0($r2)
+	f) [5 pikë] Raporti përfundimtar
+	Opsionale [Bonus pikë – max. 10 pikë]
+	g) [0 - 10 pikë] Të shtohen instruksionet e mëposhtme
+	i. [1 pikë] XOR (exclusive OR)
+	ii. [2 pikë] ADDI (add immediate)
+	iii. [2 pikë] SLL (shift left logical) & SRL (shift right logical)
+	iv. [5 pikë] MULT (multiplication) 
