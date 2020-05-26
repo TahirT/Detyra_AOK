@@ -29,7 +29,7 @@ module alu_32bit(
     input less,
     input [2:0] op,
     output result,
-    output cout;
+    output cout);
     
 wire[15:0] a, b; 
 wire cin, ainvert, bnegate, less;
