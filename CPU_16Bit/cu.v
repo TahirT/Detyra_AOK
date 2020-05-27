@@ -20,13 +20,15 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module cu(input  [5:0] opcode, output reg RegDst, output reg ALUSrc, output reg MemToReg , output reg RegWrite , output reg MemRead , output reg MemWrite, output reg Branch , output reg ALUOp1 , output reg ALUOp2);
+module cu(input  [1:0] opcode, output reg RegDst, output reg ALUSrc,
+ output reg MemToReg , output reg RegWrite , output reg MemRead , 
+ output reg MemWrite , output reg ALUOp);
 
 
 always @(opcode)
 begin
 case(opcode)
-6'b000000: //R format
+2'b00: //R format
 begin 
 assign RegDst = 1; 
 assign ALUSrc = 0; 
@@ -34,12 +36,10 @@ assign MemToReg = 0;
 assign RegWrite = 1; 
 assign MemRead = 0; 
 assign MemWrite = 0; 
-assign Branch = 0; 
-assign ALUOp1 = 1; 
-assign ALUOp2 =0; 
+assign ALUOp = 1; 
 end
 
-6'b100011: // LW
+2'b10: // LW
 begin 
 assign RegDst = 0; 
 assign ALUSrc = 1; 
@@ -47,12 +47,11 @@ assign MemToReg = 1;
 assign RegWrite = 1; 
 assign MemRead = 1; 
 assign MemWrite = 0; 
-assign Branch = 0; 
-assign ALUOp1 = 0; 
-assign ALUOp2 =0; 
+assign ALUOp = 0; 
+
 end
 
-6'b101011: // SW
+2'b11: // SW
 begin 
 assign RegDst = 0; 
 assign ALUSrc = 1; 
@@ -60,12 +59,10 @@ assign MemToReg = 0;
 assign RegWrite = 0; 
 assign MemRead = 0; 
 assign MemWrite = 1; 
-assign Branch = 0; 
-assign ALUOp1 = 0; 
-assign ALUOp2 =0; 
+assign ALUOp = 0; 
 end
 
-6'b000100: // BEQ
+2'b01: // addi
 
 begin 
 assign RegDst = 0; 
@@ -74,9 +71,7 @@ assign MemToReg = 0;
 assign RegWrite = 0; 
 assign MemRead = 0; 
 assign MemWrite = 0; 
-assign Branch = 1; 
-assign ALUOp1 = 0; 
-assign ALUOp2 =1; 
+assign ALUOp = 0; 
 end
 endcase
 end

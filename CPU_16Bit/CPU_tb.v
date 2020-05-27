@@ -33,8 +33,8 @@ module CPU_tb(
     #5 clk = 1;
     #5 clk = 0;
     #5 clk = 1;
-    #5 clk = 0;
     #5 clk = 1;
+    #5 clk = 0;
     #5 clk = 1;
     end
     CPU CPU_testbench(clk);

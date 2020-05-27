@@ -20,9 +20,12 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module Datapath(input clk, input pcfill, input RegDat,... output opcode);
+module Datapath(input clk, input pcFill, input RegDst, input MemRead,input MemToReg, input ALUOp, input MemWrite, 
+input ALUSrc, input RegWrite, output opcode);
 
-wire instruksioni(15:0);
+reg pc;
+reg z;
+wire [15:0] instruksioni;
 wire [1:0] opcode;
 wire [2:0] RS;
 wire [2:0] RT;
@@ -30,21 +33,22 @@ wire [2:0] RD;
 wire [15:0] WD;
 wire RFwe;
 wire [15:0] RD1, RD2;
-wire s;
+reg s;
 wire [15:0] alu2;
 wire [15:0] imm_long;
+wire [4:0] funct;
+wire [7:0] immediate;
 
 initial begin
-assign pc =16'd0;
+assign pc = 16'd0;
 end
 
-always(@posedge clk)
+always @(posedge clk)
 begin
-    assign pc = pcfill;
-    
+    assign pc = pcFill;
 end
 
-InstMemory DPIM (clk, pc, instruksioni); 
+InstrMemory DPIM(clk, pc, instruksioni); 
 
 assign opcode = instruksioni[15:14];
 assign RS = instruksioni[13:11];
@@ -62,27 +66,34 @@ begin
     else
     //formati I
     s = 1;
-mux_2to1 M21HyrjeRF(s, RD, RT, z)
-RegisterFile RF(RS, RT, RD, WD, RFwe, clk, RD1, RD2);
+end
+mux_2to1 M21HyrjeRF(s, RD, RT, z);
+RegisterFile RF (RS, RT, RD, WD, RFwe, clk, RD1, RD2);
 
-assign imm_long = {{8{immediate[7]}},immediate[7:0]};
+assign imm_long = {{8{immediate[7]}},immediate[7:0]}; //Sign extender
 assign alu2 = s ? immediate : RD2;
 
-aluControl()//me e ba alu coltrol
-alu_32bit aluRF(
+aluControl();//me e ba alu coltrol
+
+alu1_32bit aluRF(
      RD1,
      alu2,
     
-    input ainvert,
-    input bnegate,
-    input [2:0] op,
-    output result,
-    output cout,
+     ainvert,
+     bnegate,
+      op, //kto jan te alu control Bit1 bit2 bit 3, duhet me ba edhe 1 multiplekser 3 to 1
+     result,  //qe zgjedh operacionin(brenda alu_16Bit)
+     cout,
     );
 
-DataMemory DPDM(input AdresaNeHyrje, input WriteData, input MemWrite, input MemRead, input clk, output ReadData);
+DataMemory DPDM(AdresaNeHyrje, WriteData,  MemWrite,  MemRead,  clk, ReadData);
+
 assign Rfwe = 1;
 
-assign WD = s ? (memToReg = 1 ? ReadData : 0) : result;
+initial begin
+assign z = MemToReg;
+end
+
+assign WD = s ? (z = 1 ? ReadData : 0) : result;
 
 endmodule
