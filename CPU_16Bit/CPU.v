@@ -23,11 +23,22 @@
 module CPU(
 input clk
   );
-  wire pcfill = 16'd10;
+  wire pcFill = 16'd10;
   wire RegDst;
   wire[1:0] opcode;
-  Datapath(clk, input pcfill, input RegDat,... output opcode);  
-  cu CPU_CU(opcode,RegDst, output reg ALUSrc, output reg MemToReg , output reg RegWrite , output reg MemRead , output reg MemWrite, output reg Branch , output reg ALUOp1 , output reg ALUOp2);
+  wire MemRead;
+  wire MemToReg;
+  wire ALUOp;
+  wire MemWrite;
+  wire ALUSrc;
+  wire RegWrite;
+  //------------------
+  Datapath DP( clk,  pcFill,  RegDst, MemRead, MemToReg,  ALUOp,  MemWrite, 
+ ALUSrc,  RegWrite, opcode);
+ 
+  cu Cpu_cu(opcode,   RegDst,   ALUSrc,
+   MemToReg ,   RegWrite ,  MemRead , 
+   MemWrite ,   ALUOp);
     //te gjitha qeto inputa i bajm ma nalt si Wire
 
 endmodule

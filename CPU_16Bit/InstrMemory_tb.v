@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 04/24/2020 02:00:05 PM
+// Create Date: 05/08/2020 02:42:14 PM
 // Design Name: 
-// Module Name: mux_4to1
+// Module Name: Memory_tb
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,11 +20,23 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module mux_4to1 (s0, s1, s2, d0, d1, d2, d3, d4, z1);// op1 op2 op3 net3 net4 net5 net6 less result
-//define inputs and output                      //              and  or
-input s0, s1, s2, d0, d1, d2, d3,d4;
-output z1;
-//use the nested conditional operator
-assign z1 = s2 ? (s0 ? d4 : d2) : (s1 ? ( s0? d4 :d1) :(s0? d2: d0));
+module instrMemory_tb(
 
+    );
+reg clk;
+reg[15:0] Hyrja;
+wire[15:0] Dalja;
+reg[15:0] instrMemory[127:0];
+
+initial $monitor("Hyrja=%d, Dalja=%d", Hyrja, Dalja);
+
+initial
+begin
+#0 clk = 1'b1; Hyrja=16'd9; clk = 1'b0;
+#5 clk=1'b1;
+#10 Hyrja=16'd10; clk=1'b0;
+#10 $stop;
+end 
+
+InstrMemory instrMem(clk, Hyrja, Dalja);
 endmodule

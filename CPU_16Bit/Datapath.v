@@ -38,6 +38,7 @@ wire [15:0] alu2;
 wire [15:0] imm_long;
 wire [4:0] funct;
 wire [7:0] immediate;
+wire [2:0] ALUControlli;
 
 initial begin
 assign pc = 16'd0;
@@ -73,16 +74,18 @@ RegisterFile RF (RS, RT, RD, WD, RFwe, clk, RD1, RD2);
 assign imm_long = {{8{immediate[7]}},immediate[7:0]}; //Sign extender
 assign alu2 = s ? immediate : RD2;
 
-aluControl();//me e ba alu coltrol
+Alu_Control ALU_C( ALU_Controlli, ALUOp, Function);//me e ba alu control
 
-alu1_32bit aluRF(
+assign ALUControlli = ALU_Controlli;
+
+alu16Bit aluRF(
      RD1,
      alu2,
     
      ainvert,
      bnegate,
-      op, //kto jan te alu control Bit1 bit2 bit 3, duhet me ba edhe 1 multiplekser 3 to 1
-     result,  //qe zgjedh operacionin(brenda alu_16Bit)
+      ALUControlli,           //kto jan te alu control Bit1 bit2 bit 3, duhet me ba edhe 1 multiplekser 3 to 1
+     result,         //qe zgjedh operacionin(brenda alu_16Bit)
      cout,
     );
 

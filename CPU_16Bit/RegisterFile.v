@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module RegisterFile(input RS, input RT, input RD, input WD, input we, 
+module RegisterFile (input RS, input RT, input RD, input WD, input we, 
 input clk, output RD1, output RD2);
 
 //8 regjistra 16 bitesh
